@@ -33,3 +33,7 @@ Redmine::WikiFormatting::Macros.register do
       javascript_tag("initMermaidMacro('#{tmp_id}');")
   end
 end
+
+# big_picture
+require File.dirname(__FILE__) + '/lib/big_picture/hook_listener'
+ApplicationHelper.include BigPicture::ApplicationHelperPatch
