@@ -34,6 +34,6 @@ Redmine::WikiFormatting::Macros.register do
   end
 end
 
-# big_picture
-require File.dirname(__FILE__) + '/lib/big_picture/hook_listener'
-ApplicationHelper.include BigPicture::ApplicationHelperPatch
+# preview_attachment
+require File.dirname(__FILE__) + '/lib/preview_attachment/hook_listener'
+ApplicationHelper.include PreviewAttachment::ApplicationHelperPatch

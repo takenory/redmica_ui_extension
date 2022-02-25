@@ -2,7 +2,7 @@
 
 require_dependency 'application_helper'
 
-module BigPicture
+module PreviewAttachment
   module ApplicationHelperPatch
     def self.included(base)
       base.send(:prepend, InstanceMethods)
@@ -10,11 +10,11 @@ module BigPicture
 
     module InstanceMethods
       def link_to_attachment(attachment, options={})
-        use_big_picture = Setting.enabled_redmica_ui_extension_feature?('big_picture') &&
-                          options[:download] &&
-                          (attachment.is_image? || attachment.is_pdf? || attachment.is_video? || attachment.is_audio?)
+        previewable = Setting.enabled_redmica_ui_extension_feature?('preview_attachment') &&
+                      options[:download] &&
+                      (attachment.is_image? || attachment.is_pdf? || attachment.is_video? || attachment.is_audio?)
         attachment_link = super(attachment, options)
-        if use_big_picture
+        if previewable
           filename = attachment.filename
           bp_src = if attachment.is_image?
                      'imgSrc'
@@ -30,7 +30,7 @@ module BigPicture
                   '#',
                   :class => 'icon-only icon-zoom-in',
                   :data => { :bp => filename, :caption => filename, :bp_src => bp_src, :url => url },
-                  :onclick => 'openBigPicture(this)').html_safe + attachment_link
+                  :onclick => 'previewAttachment(this)').html_safe + attachment_link
         else
           attachment_link
         end
