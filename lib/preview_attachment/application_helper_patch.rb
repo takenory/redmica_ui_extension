@@ -13,6 +13,7 @@ module PreviewAttachment
         original_link = super(attachment, options.dup)
         return original_link unless Setting.enabled_redmica_ui_extension_feature?('preview_attachment')
         return original_link unless options[:class].to_s.include?('icon-download')
+
         bp_src = if attachment.is_image?
                    'imgSrc'
                  elsif attachment.is_video?
